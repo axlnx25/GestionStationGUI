@@ -10,7 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.Label;      
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -20,7 +21,11 @@ import javafx.scene.control.Label;
 public class LoginController implements Initializable {
 
     @FXML
-    private Button myButton;
+    private Button myLoginButton;
+    @FXML
+    private TextField myUsername;
+    @FXML
+    private TextField myPassword;
     @FXML
     private Label myLabel;
 
@@ -33,8 +38,14 @@ public class LoginController implements Initializable {
     }    
 
     @FXML
-    private void clickButton(ActionEvent event) {
-        myLabel.setText("ok");
+    private void connexion (ActionEvent event) {
+        AuthentificationController auth = new AuthentificationController();
+        if (auth.login(myUsername.getText(), myPassword.getText())) {
+            myLabel.setText("CONNEXION REUSSIE");
+            
+        } else  {
+            myLabel.setText("INCORRECT USERNAME OU PASSWORD");
+        }
     }
     
 }

@@ -14,6 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.*;
+import app_controller.*;
+import app_model.*;
+import java.util.Scanner;
 
 /**
  *
@@ -28,7 +31,7 @@ public class Main extends Application {
         
         Scene scene = new Scene(root);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("GESTION STATION");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -37,6 +40,8 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        GestionUtilisateurController defaultUser = new GestionUtilisateurController();
+        defaultUser.creerUtilisateur("admin", "12345", "admin");
         launch(args);
     }
     
