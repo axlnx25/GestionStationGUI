@@ -30,6 +30,10 @@ public class GestionUtilisateurController {
         utilisateurs.add(u);
     }
 
+    public void creerUtilisateur(Utilisateur u) {
+        utilisateurs.add(u);
+    }
+
     // 2. Supprimer utilisateur
     public void supprimerUtilisateur() {
         System.out.print("Entrez l'ID de l'utilisateur à supprimer: ");
@@ -44,6 +48,10 @@ public class GestionUtilisateurController {
             }
         }
         System.out.println(" Utilisateur introuvable !");
+    }
+
+    public void supprimerUtilisateur(Utilisateur u) {
+        utilisateurs.remove(u);
     }
 
     // 3. Modifier utilisateur

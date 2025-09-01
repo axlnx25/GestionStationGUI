@@ -25,7 +25,8 @@
       </Label>
       <TextField fx:id="myUsername" layoutX="221.0" layoutY="147.0" />
       <TextField fx:id="myPassword" layoutX="220.0" layoutY="204.0" />
-      <Button fx:id="myLoginButton" layoutX="248.0" layoutY="276.0" mnemonicParsing="false" onAction="#connexion" prefHeight="34.0" prefWidth="106.0" text="Se Connecter" />
+      <Button fx:id="myLoginButton" layoutX="122.0" layoutY="293.0" mnemonicParsing="false" onAction="#connexion" prefHeight="34.0" prefWidth="106.0" text="Se Connecter" />
       <Label fx:id="myLabel" alignment="CENTER" layoutX="138.0" layoutY="345.0" prefHeight="34.0" prefWidth="311.0" />
+      <Button fx:id="quitter" layoutX="349.0" layoutY="293.0" mnemonicParsing="false" onAction="#quitter" prefHeight="34.0" prefWidth="106.0" text="Quitter" />
    </children>
 </AnchorPane>

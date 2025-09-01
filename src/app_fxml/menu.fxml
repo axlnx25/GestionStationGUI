@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app_controller.MenuController">
    <children>
       <Accordion layoutY="40.0" prefHeight="351.0" prefWidth="202.0">
         <panes>
@@ -16,10 +17,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="NOUVELLE VENTE" />
-                        <Button layoutY="106.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="RETOUR" />
-                        <Button layoutY="71.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="ANNULER VENTE" />
-                        <Button layoutY="36.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="146.0" text="HISTORIQUE VENTE" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#crudVente" prefHeight="26.0" prefWidth="146.0" text="VENTE" />
+                        <Button layoutY="69.0" mnemonicParsing="false" onAction="#retourVente" prefHeight="26.0" prefWidth="146.0" text="RETOUR" />
+                        <Button layoutY="34.0" mnemonicParsing="false" onAction="#historiqueVente" prefHeight="26.0" prefWidth="146.0" text="HISTORIQUE VENTE" />
                      </children>
                   </AnchorPane>
             </content>
@@ -28,10 +28,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="LISTES DES ENTREES" />
-                        <Button layoutY="35.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="LISTES DES SORTIES" />
-                        <Button layoutY="70.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="RECAPITULATIF" />
-                        <Button layoutY="106.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="RETOUR" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#listeEntres" prefHeight="26.0" prefWidth="162.0" text="LISTES DES ENTREES" />
+                        <Button layoutY="35.0" mnemonicParsing="false" onAction="#listeSorties" prefHeight="26.0" prefWidth="162.0" text="LISTES DES SORTIES" />
+                        <Button layoutY="70.0" mnemonicParsing="false" onAction="#recapitulatif" prefHeight="26.0" prefWidth="162.0" text="RECAPITULATIF" />
+                        <Button layoutY="106.0" mnemonicParsing="false" onAction="#retourCaisse" prefHeight="26.0" prefWidth="162.0" text="RETOUR" />
                      </children>
                   </AnchorPane>
             </content>
@@ -40,13 +40,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="SAISIR PRODUIT" />
-                        <Button layoutY="153.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="RETOUR" />
-                        <Button layoutY="129.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="ANNULER APPROVISIONNEMENT" />
-                        <Button layoutY="103.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="APPROVISIONNEMENT PRODUIT" />
-                        <Button layoutX="-1.0" layoutY="77.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="STOCK PRODUIT" />
-                        <Button layoutY="53.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="MODIFIER PRODUIT" />
-                        <Button layoutY="27.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="SUPPRIMER PRODUIT" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#crudProduit" prefHeight="26.0" prefWidth="202.0" text="PRODUIT" />
+                        <Button layoutY="103.0" mnemonicParsing="false" onAction="#retourCarburant" prefHeight="26.0" prefWidth="202.0" text="RETOUR" />
+                        <Button layoutX="-1.0" layoutY="69.0" mnemonicParsing="false" onAction="#crudApprovisionnement" prefHeight="26.0" prefWidth="202.0" text="APPROVISIONNEMENT" />
+                        <Button layoutY="35.0" mnemonicParsing="false" onAction="#stockProduit" prefHeight="26.0" prefWidth="202.0" text="STOCK PRODUIT" />
                      </children>
                   </AnchorPane>
             </content>
@@ -55,11 +52,9 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="AJOUTER FOURNISSEUR" />
-                        <Button layoutY="140.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="RETOUR" />
-                        <Button layoutY="106.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="LISTE FOURNISSEUR" />
-                        <Button layoutY="71.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="MODIFIER FOURNISSEUR" />
-                        <Button layoutY="37.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="SUPPRIMER FOURNISSEUR" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#crudFournisseur" prefHeight="26.0" prefWidth="182.0" text=" FOURNISSEUR" />
+                        <Button layoutY="69.0" mnemonicParsing="false" onAction="#retourFournisseur" prefHeight="26.0" prefWidth="182.0" text="RETOUR" />
+                        <Button layoutY="34.0" mnemonicParsing="false" onAction="#listeFournisseur" prefHeight="26.0" prefWidth="182.0" text="LISTE FOURNISSEUR" />
                      </children>
                   </AnchorPane>
                </content>
@@ -68,11 +63,8 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="CREER UTILISATEUR" />
-                        <Button layoutY="140.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="RETOUR" />
-                        <Button layoutY="104.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="SUPPRIMER UTILISATEUR" />
-                        <Button layoutY="70.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="MODIFIER UTILISATEUR" />
-                        <Button layoutY="35.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="SUPPRIMER UTILISATEUR" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#crudUtilisateur" prefHeight="26.0" prefWidth="181.0" text=" UTILISATEUR" />
+                        <Button layoutY="38.0" mnemonicParsing="false" onAction="#retourUtilisateur" prefHeight="26.0" prefWidth="181.0" text="RETOUR" />
                      </children>
                   </AnchorPane>
                </content>
@@ -81,7 +73,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="164.0" prefWidth="201.0">
                      <children>
-                        <Button layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" text="QUITTER" />
+                        <Button layoutY="1.0" mnemonicParsing="false" onAction="#deconnexion" prefHeight="26.0" prefWidth="113.0" text="QUITTER" />
                      </children>
                   </AnchorPane>
                </content>
@@ -93,6 +85,14 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="contentArea" layoutX="202.0" layoutY="40.0" prefHeight="362.0" prefWidth="399.0" />
+      <AnchorPane fx:id="contentArea" layoutX="202.0" layoutY="40.0" prefHeight="363.0" prefWidth="399.0">
+         <children>
+            <ImageView fitHeight="362.0" fitWidth="399.0" layoutY="1.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../app_media/homeStationPhoto.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
