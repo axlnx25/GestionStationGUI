@@ -68,6 +68,13 @@ public class UtilisateurController implements Initializable {
         for (Utilisateur c: g.getUtilisateurs()) {
             listUsers.add(c);
         }
+        listeCrudUtilisateur.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                remplirUsername.setText(newValue.usernameProperty().get());
+                remplirPassword.setText(newValue.passwordProperty().get());
+                remplirRole.setText(newValue.roleProperty().get());
+            }
+        });
     }    
 
     @FXML
@@ -87,6 +94,11 @@ public class UtilisateurController implements Initializable {
         if (u != null) {
             g.supprimerUtilisateur(u);
             listUsers.remove(u);
+
+            remplirUsername.clear();
+            remplirPassword.clear();
+            remplirRole.clear();
+
             erreurUtilisateur.setText("Supprimer avec Succes ");
         } else erreurUtilisateur.setText("Echec ");
     }
@@ -95,9 +107,15 @@ public class UtilisateurController implements Initializable {
     private void ModifierUtilisateur(ActionEvent event) {
         Utilisateur selectedUtilisateur = listeCrudUtilisateur.getSelectionModel().getSelectedItem();
         if (selectedUtilisateur != null) {
+
             selectedUtilisateur.setUsername(remplirUsername.getText());
             selectedUtilisateur.setPassword(remplirPassword.getText());
             selectedUtilisateur.setRole(remplirRole.getText());
+
+            remplirUsername.clear();
+            remplirPassword.clear();
+            remplirRole.clear();
+
             erreurUtilisateur.setText("Modifier avec Succes ");
         } else erreurUtilisateur.setText("Echec ");
     }

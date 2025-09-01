@@ -17,17 +17,12 @@ public class Caisse {
     ApprovisionnementListe l = new ApprovisionnementListe();
     VenteGestion g = new VenteGestion();
 
-    public void initialisationDesValeurs () {
-        totalDesEntree = g.nombresDeVentes() ;
-        totalDesSortes = l.nombreApprovisionnement();
-    }
-
     public int getTotalDesEntree() {
-        return totalDesEntree;
+        return g.nombresDeVentes();
     }
 
     public int getTotalDesSortes() {
-        return totalDesSortes;
+        return l.nombreApprovisionnement();
     }
 
 //    public void afficherListeDesEntree() {

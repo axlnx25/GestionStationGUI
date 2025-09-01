@@ -4,6 +4,7 @@
  */
 package app_model;
 
+import app_controller.Stock;
 import javafx.beans.property.*;
 
 /**
@@ -20,10 +21,16 @@ public class Vente {
     private BooleanProperty estAnnule = new SimpleBooleanProperty();
 
     public Vente(String produit, double quantite, String date) {
+        Stock stock = new Stock();
+
         this.id.set(++compteur);
         this.produit.set(produit);
         this.quantite.set(quantite);
-//        this.prixUnitaire.set(prixUnitaire);
+        for (Carburant c : stock.getStockNonSt().values()) {
+            if (c.getNomCarburant().equalsIgnoreCase(produit)) {
+                this.prixUnitaire.set(c.getPrix());
+            }
+        }
         this.date.set(date);
         this.estAnnule.set(false);
     }
@@ -32,7 +39,7 @@ public class Vente {
         return id.get();
     }
     public double getTotal() {
-        return quantite.get() * prixUnitaire.get();
+        return (quantite.get() * prixUnitaire.get());
     }
     public double getPrix() {
         return prixUnitaire.get();
@@ -85,8 +92,18 @@ public class Vente {
         return id;
     }
     public DoubleProperty prixProperty() {
-        DoubleProperty resultat = new SimpleDoubleProperty(getTotal());
+        DoubleProperty resultat = new SimpleDoubleProperty(quantite.get() * prixUnitaire.get());
         return resultat;
+    }
+
+    public StringProperty venteEtat () {
+        if (estAnnule.get()) {
+            StringProperty result = new SimpleStringProperty("Annulé");
+            return result;
+        } else  {
+            StringProperty result = new SimpleStringProperty("Validé");
+            return result;
+        }
     }
 
     @Override

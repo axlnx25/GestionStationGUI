@@ -13,7 +13,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="erreurCaisse" layoutY="225.0" prefHeight="31.0" prefWidth="399.0" />
+      <Label fx:id="erreurCaisse" alignment="CENTER" layoutY="225.0" prefHeight="42.0" prefWidth="399.0" underline="true" />
       <Label fx:id="entreCaisse" layoutX="272.0" layoutY="88.0" prefHeight="25.0" prefWidth="95.0" />
       <Label fx:id="sortieCaisse" layoutX="272.0" layoutY="138.0" prefHeight="25.0" prefWidth="95.0" />
    </children>

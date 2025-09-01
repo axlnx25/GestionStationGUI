@@ -36,7 +36,7 @@ public class EntresCaisseController implements Initializable {
     @FXML
     private TableColumn<Vente, String> dateVente;
     @FXML
-    private TableColumn<Vente, Boolean> etatVente;
+    private TableColumn<Vente, String> etatVente;
 
     ObservableList<Vente> listVente;
     VenteGestion venteGestion = new VenteGestion();
@@ -53,7 +53,7 @@ public class EntresCaisseController implements Initializable {
         quantiteVente.setCellValueFactory(data -> data.getValue().quantiteProperty().asObject());
         prixVente.setCellValueFactory(data -> data.getValue().prixProperty().asObject());
         dateVente.setCellValueFactory(data -> data.getValue().dateProperty());
-        etatVente.setCellValueFactory(data -> data.getValue().estAnnuleProperty().asObject());
+        etatVente.setCellValueFactory(data -> data.getValue().venteEtat());
 
         listVente.addAll(venteGestion.getVentes());
     }    

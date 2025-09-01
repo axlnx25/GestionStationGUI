@@ -134,10 +134,10 @@ public class VenteGestion {
     }
 
     public double valeurDesVentes() {
-        double resultat = 0;
-        for (Vente v : ventes) {
+        double resultat = 0.0;
+        for (Vente v : getVentes()) {
             if (!v.isAnnule()) {
-                resultat += v.getTotal();
+                resultat = v.getTotal() + resultat;
             }
         }
         return resultat;

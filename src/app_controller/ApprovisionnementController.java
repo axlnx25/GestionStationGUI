@@ -102,7 +102,8 @@ public class ApprovisionnementController implements Initializable {
 
                     break;
                 }
-            } erreurApprovisionnement.setText("Echec Ce Fournisseur n'existe pas");
+                erreurApprovisionnement.setText("Echec Ce Fournisseur n'existe pas");
+            }
         }
     }
 

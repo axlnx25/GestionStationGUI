@@ -67,7 +67,11 @@ public class VenteController implements Initializable {
         dateVente.setCellValueFactory(data -> data.getValue().dateProperty());
         idVente.setCellValueFactory(data -> data.getValue().idProperty().asObject());
 
-        listVente.addAll(venteGestion.getVentes());
+        for (Vente v : venteGestion.getVentes()) {
+            if (!v.isAnnule()) {
+                listVente.add(v);
+            }
+        }
     }    
 
     @FXML
@@ -75,21 +79,28 @@ public class VenteController implements Initializable {
         Stock stock = new Stock();
         for (Carburant c: stock.getStockNonSt().values()) {
             if (c.getNomCarburant().equalsIgnoreCase(remplirProduit.getText())) {
-                if ((c.getQuantite() > 0.0) && (c.getQuantite() > Double.parseDouble(remplirQuantite.getText()) )) {
+                if ((c.getQuantite() > 0.0) && (c.getQuantite() >= Double.parseDouble(remplirQuantite.getText()) )) {
                     Vente v = new Vente(remplirProduit.getText(), Double.parseDouble(remplirQuantite.getText()), remplirDate.getText());
-                    c.setQuantite(Double.parseDouble(remplirQuantite.getText()) - c.getQuantite());
+                    c.setQuantite( c.getQuantite() - Double.parseDouble(remplirQuantite.getText()));
                     listVente.add(v);
                     venteGestion.getVentes().add(v);
+                    erreurVente.setText("Vente Reussi");
+
+                    remplirProduit.clear();
+                    remplirQuantite.clear();
+                    remplirDate.clear();
+
                     break;
                 }
             }
-        } erreurVente.setText("Echec ");
+            erreurVente.setText("Echec ");
+        }
     }
 
     @FXML
     private void annulerVente(ActionEvent event) {
         Stock stock = new Stock();
-        Vente selectedVente = (Vente) crudVente.getSelectionModel().getSelectedItem();
+        Vente selectedVente = crudVente.getSelectionModel().getSelectedItem();
         selectedVente.setEstAnnule(true);
         for (Carburant c: stock.getStockNonSt().values()) {
             if (c.getNomCarburant().equalsIgnoreCase(selectedVente.getProduit())) {
@@ -98,8 +109,9 @@ public class VenteController implements Initializable {
                 listVente.remove(selectedVente);
                 break;
             }
+            erreurVente.setText("Echec ");
         }
-        erreurVente.setText("Echec ");
+
     }
     
 }

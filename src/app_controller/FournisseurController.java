@@ -73,6 +73,15 @@ public class FournisseurController implements Initializable {
         for (Fournisseur c: f.getHistoriqueFournisseur().values()) {
             listFournisseur.add(c);
         }
+
+        listeCrudFournisseur.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                remplirAdresse.setText(newValue.getAdresseFournisseur());
+                remplirTelephone.setText(newValue.getTelephoneFournisseur());
+                remplirPrenomFournisseur.setText(newValue.getPrenomFournisseur());
+                remplirNomFournisseur.setText(newValue.getNomFournisseur());
+            }
+        });
     }    
 
     @FXML
@@ -93,6 +102,12 @@ public class FournisseurController implements Initializable {
         if (selection != null) {
             f.supprimerFournisseur(selection.getIdentifiantFournisseur());
             listFournisseur.remove(selection);
+
+            remplirAdresse.clear();
+            remplirTelephone.clear();
+            remplirPrenomFournisseur.clear();
+            remplirNomFournisseur.clear();
+
             erreurFournisseur.setText("Supprimer avec Succes");
         } else erreurFournisseur.setText("Echec ");
     }
@@ -101,10 +116,17 @@ public class FournisseurController implements Initializable {
     private void ModifierFournisseur(ActionEvent event) {
         Fournisseur selection =  listeCrudFournisseur.getSelectionModel().getSelectedItem();
         if (selection != null) {
+
             selection.setNomFournisseur(remplirNomFournisseur.getText());
             selection.setPrenomFournisseur(remplirPrenomFournisseur.getText());
             selection.setAdresseFournisseur(remplirAdresse.getText());
             selection.setTelephoneFournisseur(remplirTelephone.getText());
+
+            remplirAdresse.clear();
+            remplirTelephone.clear();
+            remplirPrenomFournisseur.clear();
+            remplirNomFournisseur.clear();
+
             erreurFournisseur.setText("Modifier avec Succes");
         } else erreurFournisseur.setText("Echec ");
     }
