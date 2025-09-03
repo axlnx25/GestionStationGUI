@@ -96,6 +96,10 @@ public class ApprovisionnementController implements Initializable {
                             c.setQuantite(Double.parseDouble(remplirQuantite.getText()) + c.getQuantite());
                             cellApprovisionnement.ajouterApprovisionnement(a);
                             erreurApprovisionnement.setText("Ajouter avec Succes");
+                            remplirProduit.clear();
+                            remplirQuantite.clear();
+                            remplirNomFournisseur.clear();
+                            remplirDate.clear();
                             break;
                         } erreurApprovisionnement.setText("Echec Ce Produit n'existe pas");
                     }
@@ -109,7 +113,25 @@ public class ApprovisionnementController implements Initializable {
 
     @FXML
     private void supprimerApprovisionnement(ActionEvent event) {
-
+        VenteGestion venteGestion = new VenteGestion();
+        Stock stock = new Stock();
+        ApprovisionnementListe l = new ApprovisionnementListe();
+        app_controller.Approvisionnement selection = crudApprovisionnement.getSelectionModel().getSelectedItem();
+        if (venteGestion.getVentes().isEmpty()) {
+            for (Carburant c: stock.getStockNonSt().values()) {
+                if (c.getNomCarburant().equalsIgnoreCase(selection.getNomProduit())) {
+                    c.setQuantite(c.getQuantite() - selection.getQuantitApprovisionne());
+                    for (app_controller.Approvisionnement a : l.getListeApprovisionnements().values()) {
+                        if (a.getNomProduit().equalsIgnoreCase(selection.getNomProduit())) {
+                            l.getListeApprovisionnements().remove(a.getIdentifiant());
+                        }
+                    }
+                    listApprovisionnements.remove(selection);
+                    erreurApprovisionnement.setText("Supprimer avec Succes");
+                    break;
+                }
+            }
+        }
     }
     
 }
