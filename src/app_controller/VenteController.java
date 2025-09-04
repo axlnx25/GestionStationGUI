@@ -5,6 +5,7 @@
 package app_controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import app_model.Carburant;
@@ -14,10 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -38,13 +36,13 @@ public class VenteController implements Initializable {
     @FXML
     private TableColumn<Vente, Double> prixUniteVente;
     @FXML
-    private TableColumn<Vente, String> dateVente;
+    private TableColumn<Vente, LocalDate> dateVente;
     @FXML
     private TableColumn<Vente, Integer> idVente;
     @FXML
-    private TextField remplirProduit;
+    private ComboBox<String> myComboBoxProduit;
     @FXML
-    private TextField remplirDate;
+    private DatePicker myDate;
     @FXML
     private TextField remplirQuantite;
     @FXML
@@ -61,11 +59,19 @@ public class VenteController implements Initializable {
         listVente = FXCollections.observableArrayList();
         crudVente.setItems(listVente);
 
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+
+        for (Carburant c: Stock.getStock().values()) {
+            observableList.add(c.getNomCarburant());
+        }
+        myComboBoxProduit.setItems(observableList);
+
         produitVente.setCellValueFactory(data -> data.getValue().produitProperty());
         quantiteVente.setCellValueFactory(data -> data.getValue().quantiteProperty().asObject());
         prixUniteVente.setCellValueFactory(data -> data.getValue().prixUnitaireProperty().asObject());
         dateVente.setCellValueFactory(data -> data.getValue().dateProperty());
         idVente.setCellValueFactory(data -> data.getValue().idProperty().asObject());
+
 
         for (Vente v : venteGestion.getVentes()) {
             if (!v.isAnnule()) {
@@ -78,17 +84,23 @@ public class VenteController implements Initializable {
     private void vendre(ActionEvent event) {
         Stock stock = new Stock();
         for (Carburant c: stock.getStockNonSt().values()) {
-            if (c.getNomCarburant().equalsIgnoreCase(remplirProduit.getText())) {
+            if (c.getNomCarburant().equalsIgnoreCase(myComboBoxProduit.getValue())) {
                 if ((c.getQuantite() > 0.0) && (c.getQuantite() >= Double.parseDouble(remplirQuantite.getText()) )) {
-                    Vente v = new Vente(remplirProduit.getText(), Double.parseDouble(remplirQuantite.getText()), remplirDate.getText());
+                    boolean okquantite = ValidationController.validerNombre(remplirQuantite, erreurVente, "Quantite Invalide");
+                    boolean okdate = ValidationController.validerDateObligatoire(myDate, erreurVente, "Date Invalide");
+                    if (!(okquantite && okdate)) {
+                        return;
+                    }
+
+                    Vente v = new Vente(myComboBoxProduit.getValue(), Double.parseDouble(remplirQuantite.getText()), myDate.getValue());
                     c.setQuantite( c.getQuantite() - Double.parseDouble(remplirQuantite.getText()));
                     listVente.add(v);
                     venteGestion.getVentes().add(v);
                     erreurVente.setText("Vente Reussi");
 
-                    remplirProduit.clear();
+                    myComboBoxProduit.setValue(null);
                     remplirQuantite.clear();
-                    remplirDate.clear();
+                    myDate.setValue(null);
 
                     break;
                 }

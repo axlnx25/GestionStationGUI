@@ -78,6 +78,15 @@ public class ProduitController implements Initializable {
     @FXML
     private void ajouterProduit(ActionEvent event) throws IOException {
         if (!stockCarburant.estDansStock(remplirNomProduit.getText())) {
+            boolean okNom = ValidationController.validerTexteObligatoire(remplirNomProduit, erreurCarburant, "Nom Invalide !");
+            boolean okQuantite = ValidationController.validerNombre(remplirQuantite, erreurCarburant, "Quantite Invalide !");
+            boolean okPU = ValidationController.validerNombre(remplirPrixUnitaire, erreurCarburant, "PrixUnitaire Invalide !");
+            boolean okSeuil = ValidationController.validerNombre(remplirSeuil, erreurCarburant, "Seuil Invalide !");
+            if (!(okNom && okQuantite && okPU && okSeuil)) {
+                return;
+            }
+
+
             Carburant carburant = new Carburant(remplirNomProduit.getText(), Double.parseDouble(remplirPrixUnitaire.getText()),Double.parseDouble(remplirQuantite.getText()), Double.parseDouble(remplirSeuil.getText()) );
             stockCarburant.ajouterAuStock(carburant);
             listProduit.add(carburant);
@@ -106,6 +115,14 @@ public class ProduitController implements Initializable {
     private void ModifierProduit(ActionEvent event) throws IOException {
         Carburant selection = listeProduitCarburant.getSelectionModel().getSelectedItem();
         if (selection != null) {
+            boolean okNom = ValidationController.validerTexteObligatoire(remplirNomProduit, erreurCarburant, "Nom Invalide !");
+            boolean okQuantite = ValidationController.validerNombre(remplirQuantite, erreurCarburant, "Quantite Invalide !");
+            boolean okPU = ValidationController.validerNombre(remplirPrixUnitaire, erreurCarburant, "PrixUnitaire Invalide !");
+            boolean okSeuil = ValidationController.validerNombre(remplirSeuil, erreurCarburant, "Seuil Invalide !");
+            if (!(okNom && okQuantite && okPU && okSeuil)) {
+                return;
+            }
+
             selection.setNomCarburant(remplirNomProduit.getText());
             selection.setQuantite(Double.parseDouble(remplirQuantite.getText()));
             selection.setPrix(Double.parseDouble(remplirPrixUnitaire.getText()));

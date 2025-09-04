@@ -7,6 +7,8 @@ package app_model;
 import app_controller.Stock;
 import javafx.beans.property.*;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author axlnx
@@ -17,10 +19,10 @@ public class Vente {
     private StringProperty produit = new SimpleStringProperty();
     private DoubleProperty quantite = new SimpleDoubleProperty();
     private DoubleProperty prixUnitaire = new SimpleDoubleProperty();
-    private StringProperty date = new SimpleStringProperty();
+    private ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
     private BooleanProperty estAnnule = new SimpleBooleanProperty();
 
-    public Vente(String produit, double quantite, String date) {
+    public Vente(String produit, double quantite, LocalDate date) {
         Stock stock = new Stock();
 
         this.id.set(++compteur);
@@ -66,9 +68,9 @@ public class Vente {
     public void setPrixUnitaire(double prixUnitaire) {
         this.prixUnitaire.set(prixUnitaire);
     }
-    public void setDate(String date) {
-        this.date.set(date);
-    }
+//    public void setDate(String date) {
+//        this.date.set(date);
+//    }
     public void setEstAnnule(boolean estAnnule) {
         this.estAnnule.set(estAnnule);
     }
@@ -82,7 +84,7 @@ public class Vente {
     public DoubleProperty prixUnitaireProperty() {
         return prixUnitaire;
     }
-    public StringProperty dateProperty() {
+    public ObjectProperty<LocalDate> dateProperty() {
         return date;
     }
     public BooleanProperty estAnnuleProperty() {

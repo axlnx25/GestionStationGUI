@@ -5,6 +5,7 @@
 package app_controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import app_model.Carburant;
@@ -14,10 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -40,17 +38,17 @@ public class ApprovisionnementController implements Initializable {
     @FXML
     private TableColumn<Approvisionnement, Double> quantiteApprovisionne;
     @FXML
-    private TableColumn<Approvisionnement, String> dateApprovisionnement;
+    private TableColumn<Approvisionnement, LocalDate> dateApprovisionnement;
     @FXML
     private TableColumn<Approvisionnement, Integer> idFournisseur;
     @FXML
     private TextField remplirQuantite;
     @FXML
-    private TextField remplirProduit;
+    private ComboBox<String> comboProduit;
     @FXML
-    private TextField remplirNomFournisseur;
+    private ComboBox<String> comboFournisseur;
     @FXML
-    private TextField remplirDate;
+    private DatePicker dateAppro;
     @FXML
     private Label erreurApprovisionnement;
     @FXML
@@ -58,6 +56,7 @@ public class ApprovisionnementController implements Initializable {
 
     ObservableList<Approvisionnement> listApprovisionnements;
     ApprovisionnementListe cellApprovisionnement = new ApprovisionnementListe();
+    CrudFournisseur fournisseur = new CrudFournisseur();
 
     /**
      * Initializes the controller class.
@@ -66,6 +65,21 @@ public class ApprovisionnementController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         listApprovisionnements = FXCollections.observableArrayList();
         crudApprovisionnement.setItems(listApprovisionnements);
+
+        ObservableList<String> observableListFrn = FXCollections.observableArrayList();
+        ObservableList<String> observableListProd = FXCollections.observableArrayList();
+
+
+        for(Fournisseur f : fournisseur.getHistoriqueFournisseur().values()) {
+            observableListFrn.add(f.getPrenomFournisseur());
+        }
+        comboFournisseur.setItems(observableListFrn);
+
+        for (Carburant c: Stock.stock.values()) {
+            observableListProd.add(c.getNomCarburant());
+        }
+        comboProduit.setItems(observableListProd);
+
 
         libelleApprovisionnement.setCellValueFactory(data -> data.getValue().libelleProperty());
         nomFournisseur.setCellValueFactory(data -> data.getValue().nomFournisseurProperty());
@@ -87,19 +101,29 @@ public class ApprovisionnementController implements Initializable {
             erreurApprovisionnement.setText("Echec Ce Fournisseur ou Produit n'existe pas");
         } else {
             for (Fournisseur f : crud.getHistoriqueFournisseur().values()) {
-                if (f.getNomFournisseur().equalsIgnoreCase(remplirNomFournisseur.getText())) {
+                if (f.getPrenomFournisseur().equalsIgnoreCase(comboFournisseur.getValue())) {
 
                     for (Carburant c : stock.getStockNonSt().values()) {
-                        if (c.getNomCarburant().equalsIgnoreCase(remplirProduit.getText())) {
-                            app_controller.Approvisionnement a = new Approvisionnement(Approvisionnement.getText(), remplirNomFournisseur.getText(), remplirProduit.getText(), Double.parseDouble(remplirQuantite.getText()), remplirDate.getText());
+                        if (c.getNomCarburant().equalsIgnoreCase(comboProduit.getValue())) {
+
+                            boolean oklibelle = ValidationController.validerTexteObligatoire(Approvisionnement, erreurApprovisionnement, "libelle obligatoire !");
+                            boolean okQuantite = ValidationController.validerNombre(remplirQuantite, erreurApprovisionnement, "Quantite invalide!");
+                            boolean okDate = ValidationController.validerDateObligatoire(dateAppro, erreurApprovisionnement, "Date invalide!");
+                            if (!(oklibelle && okQuantite && okDate)) {
+                                return; //quitter si probleme avec les entres utilisateurs
+                            }
+
+
+                            app_controller.Approvisionnement a = new Approvisionnement(Approvisionnement.getText(), comboFournisseur.getValue(), comboProduit.getValue(), Double.parseDouble(remplirQuantite.getText()), dateAppro.getValue());
                             listApprovisionnements.add(a);
                             c.setQuantite(Double.parseDouble(remplirQuantite.getText()) + c.getQuantite());
                             cellApprovisionnement.ajouterApprovisionnement(a);
                             erreurApprovisionnement.setText("Ajouter avec Succes");
-                            remplirProduit.clear();
+
+                            comboProduit.setValue(null);
                             remplirQuantite.clear();
-                            remplirNomFournisseur.clear();
-                            remplirDate.clear();
+                            comboFournisseur.setValue(null);
+                            dateAppro.setValue(null);
                             break;
                         } erreurApprovisionnement.setText("Echec Ce Produit n'existe pas");
                     }
@@ -131,7 +155,7 @@ public class ApprovisionnementController implements Initializable {
                     break;
                 }
             }
-        }
+        } else erreurApprovisionnement.setText("Impossible car il y'a deja une vente !");
     }
     
 }

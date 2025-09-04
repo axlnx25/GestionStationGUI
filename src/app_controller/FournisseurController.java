@@ -86,6 +86,15 @@ public class FournisseurController implements Initializable {
 
     @FXML
     private void ajouterFournisseur(ActionEvent event) {
+        boolean okNom = ValidationController.validerTexteObligatoire(remplirNomFournisseur, erreurFournisseur, "Nom Invalide !");
+        boolean okPrenom = ValidationController.validerTexteObligatoire(remplirPrenomFournisseur, erreurFournisseur, "Prenom Invalide !");
+        boolean okAdresse = ValidationController.validerTexteObligatoire(remplirAdresse, erreurFournisseur, "Adresse Invalide !");
+        boolean okTelephone = ValidationController.validerTexteObligatoire(remplirTelephone, erreurFournisseur, "Telephone Invalide !");
+         if (!(okNom && okPrenom && okAdresse && okTelephone)) {
+             return;
+         }
+
+
         Fournisseur fournisseur = new Fournisseur(remplirNomFournisseur.getText(), remplirPrenomFournisseur.getText(), remplirAdresse.getText(), remplirTelephone.getText());
         f.ajouterAListeFournisseur(fournisseur);
         listFournisseur.add(fournisseur);
@@ -116,6 +125,13 @@ public class FournisseurController implements Initializable {
     private void ModifierFournisseur(ActionEvent event) {
         Fournisseur selection =  listeCrudFournisseur.getSelectionModel().getSelectedItem();
         if (selection != null) {
+            boolean okNom = ValidationController.validerTexteObligatoire(remplirNomFournisseur, erreurFournisseur, "Nom Invalide !");
+            boolean okPrenom = ValidationController.validerTexteObligatoire(remplirPrenomFournisseur, erreurFournisseur, "Prenom Invalide !");
+            boolean okAdresse = ValidationController.validerTexteObligatoire(remplirAdresse, erreurFournisseur, "Adresse Invalide !");
+            boolean okTelephone = ValidationController.validerTexteObligatoire(remplirTelephone, erreurFournisseur, "Telephone Invalide !");
+            if (!(okNom && okPrenom && okAdresse && okTelephone)) {
+                return;
+            }
 
             selection.setNomFournisseur(remplirNomFournisseur.getText());
             selection.setPrenomFournisseur(remplirPrenomFournisseur.getText());

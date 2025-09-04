@@ -5,6 +5,7 @@
 package app_controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import app_model.Vente;
@@ -34,7 +35,7 @@ public class EntresCaisseController implements Initializable {
     @FXML
     private TableColumn<Vente, Double> prixVente;
     @FXML
-    private TableColumn<Vente, String> dateVente;
+    private TableColumn<Vente, LocalDate> dateVente;
     @FXML
     private TableColumn<Vente, String> etatVente;
 

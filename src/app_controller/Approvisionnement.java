@@ -7,6 +7,7 @@ package app_controller;
 import app_model.Carburant;
 import javafx.beans.property.*;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -17,13 +18,13 @@ public class Approvisionnement {
     private static int compteur = 0;
     private IntegerProperty identifiant =  new SimpleIntegerProperty();
     private StringProperty libelle =  new SimpleStringProperty();
-    private StringProperty date =  new SimpleStringProperty();
+    private ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
     private StringProperty nomFournisseur  = new SimpleStringProperty();
     private StringProperty nomProduit = new SimpleStringProperty();
     private DoubleProperty quantitApprovisionne =  new SimpleDoubleProperty();
     Stock stock = new Stock();
 
-   public Approvisionnement(String libelle, String nom, String produit, Double quantite, String date) {
+   public Approvisionnement(String libelle, String nom, String produit, Double quantite, LocalDate date) {
         this.identifiant.set(compteur++);
         this.libelle.set(libelle);
         this.nomFournisseur.set(nom);
@@ -44,7 +45,7 @@ public class Approvisionnement {
         return libelle.get();
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date.get();
     }
 
@@ -68,7 +69,7 @@ public class Approvisionnement {
         this.libelle.set(libelle);
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date.set(date);
     }
 
@@ -88,7 +89,7 @@ public class Approvisionnement {
         return libelle;
     }
 
-    public StringProperty dateProperty() {
+    public ObjectProperty<LocalDate> dateProperty() {
         return date;
     }
 
