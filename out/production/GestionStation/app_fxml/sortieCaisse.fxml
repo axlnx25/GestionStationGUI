@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="contentArea" prefHeight="363.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app_controller.SortieCaisseController">
+   <children>
+      <TableView fx:id="sortieCaisse" layoutX="10.0" prefHeight="363.0" prefWidth="378.0">
+         <columns>
+            <TableColumn fx:id="nomFournisseur" prefWidth="75.0" text="Nom Frns" />
+            <TableColumn fx:id="nomProduit" prefWidth="75.0" text="Nom Prdt" />
+            <TableColumn fx:id="quantiteApprovisionne" prefWidth="75.0" text="Quantite" />
+            <TableColumn fx:id="dateApprovisionnement" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="prixApprovisionnement" prefWidth="75.0" text="Prix Apprv" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

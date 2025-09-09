@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="contentArea" prefHeight="363.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app_controller.ListeFournisseurController">
+   <children>
+      <TableView fx:id="historiqueFournisseur" layoutX="10.0" prefHeight="363.0" prefWidth="378.0">
+         <columns>
+            <TableColumn fx:id="nomFournisseur" prefWidth="75.0" text="Nom" />
+            <TableColumn fx:id="prenomFournisseur" prefWidth="75.0" text="Prenom" />
+            <TableColumn fx:id="adresseFournisseur" prefWidth="75.0" text="Adresse" />
+            <TableColumn fx:id="telephoneFournisseur" prefWidth="75.0" text="Telephone" />
+            <TableColumn fx:id="idFournisseur" prefWidth="75.0" text="ID" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
