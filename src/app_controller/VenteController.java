@@ -4,8 +4,13 @@
  */
 package app_controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app_model.Carburant;
@@ -50,6 +55,8 @@ public class VenteController implements Initializable {
 
     ObservableList<Vente> listVente;
     VenteGestion venteGestion = new VenteGestion();
+    String fichier = "VenteFichier.txt";
+    String fichierProduit ="Stock.txt";
 
     /**
      * Initializes the controller class.
@@ -97,6 +104,9 @@ public class VenteController implements Initializable {
                     listVente.add(v);
                     venteGestion.getVentes().add(v);
                     erreurVente.setText("Vente Reussi");
+                    venteGestion.sauvegarderVentes(fichier, erreurVente);
+                    Stock miseAJour = new Stock();
+                    miseAJour.sauvegarderStock(fichierProduit);
 
                     myComboBoxProduit.setValue(null);
                     remplirQuantite.clear();
@@ -114,6 +124,7 @@ public class VenteController implements Initializable {
         Stock stock = new Stock();
         Vente selectedVente = crudVente.getSelectionModel().getSelectedItem();
         selectedVente.setEstAnnule(true);
+        venteGestion.sauvegarderVentes(fichier, erreurVente);
         for (Carburant c: stock.getStockNonSt().values()) {
             if (c.getNomCarburant().equalsIgnoreCase(selectedVente.getProduit())) {
                 c.setQuantite(selectedVente.getQuantite() + c.getQuantite());

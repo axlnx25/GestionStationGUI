@@ -2,6 +2,7 @@ package app_controller;
 
 import app_model.Carburant;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -210,4 +211,35 @@ public class Stock {
         }
         return false;
     }
+
+    public void sauvegarderStock (String fichier) {
+        try (BufferedWriter ecriture = new BufferedWriter(new FileWriter(new File(fichier)))) {
+            for (Carburant carburant : stock.values()) {
+                ecriture.write(carburant.toString());
+                ecriture.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void chargerStock (String fichier) {
+        try (BufferedReader lecture = new BufferedReader(new FileReader(new File(fichier)))) {
+            String line;
+            while ((line = lecture.readLine()) != null) {
+                String[] data = line.split(",");
+                int id =  Integer.parseInt(data[0]);
+                String nomCarburant = data[1];
+                double prix = Double.parseDouble(data[2]);
+                double seuil = Double.parseDouble(data[3]);
+                double quantite = Double.parseDouble(data[4]);
+
+                Carburant carburant = new Carburant(nomCarburant, prix, quantite, seuil);
+                stock.put(id, carburant);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

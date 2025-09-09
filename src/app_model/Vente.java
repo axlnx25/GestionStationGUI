@@ -68,9 +68,9 @@ public class Vente {
     public void setPrixUnitaire(double prixUnitaire) {
         this.prixUnitaire.set(prixUnitaire);
     }
-//    public void setDate(String date) {
-//        this.date.set(date);
-//    }
+    public void setDate(LocalDate date) {
+        this.date.set(date);
+    }
     public void setEstAnnule(boolean estAnnule) {
         this.estAnnule.set(estAnnule);
     }
@@ -110,13 +110,13 @@ public class Vente {
 
     @Override
     public String toString() {
-        return "Vente #" + id.get() +
-                " | Produit: " + produit.get() +
-                " | Quantité: " + quantite.get() +
-                " | PU: " + prixUnitaire.get() +
-                " | Total: " + getTotal() +
-                " | Date: " + date.get() +
-                (estAnnule.get() ? " | [ANNULÉE]" : "");
+        return       id.get() +
+                "," + produit.get() +
+                "," + quantite.get() +
+                "," + prixUnitaire.get() +
+                "," + getTotal() +
+                "," + date.get() +
+                "," + estAnnule.get() ;
     }
 
 }

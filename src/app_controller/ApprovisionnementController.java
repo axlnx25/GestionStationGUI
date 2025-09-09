@@ -57,6 +57,8 @@ public class ApprovisionnementController implements Initializable {
     ObservableList<Approvisionnement> listApprovisionnements;
     ApprovisionnementListe cellApprovisionnement = new ApprovisionnementListe();
     CrudFournisseur fournisseur = new CrudFournisseur();
+    String fichierApprovisionnement = "Approvisionnement.txt";
+    String fichierProduit ="Stock.txt";
 
     /**
      * Initializes the controller class.
@@ -118,6 +120,10 @@ public class ApprovisionnementController implements Initializable {
                             listApprovisionnements.add(a);
                             c.setQuantite(Double.parseDouble(remplirQuantite.getText()) + c.getQuantite());
                             cellApprovisionnement.ajouterApprovisionnement(a);
+                            cellApprovisionnement.sauvegarderApprovisionnement(fichierApprovisionnement);
+                            Stock miseAJour = new Stock();
+                            miseAJour.sauvegarderStock(fichierProduit);
+
                             erreurApprovisionnement.setText("Ajouter avec Succes");
 
                             comboProduit.setValue(null);
@@ -148,9 +154,12 @@ public class ApprovisionnementController implements Initializable {
                     for (app_controller.Approvisionnement a : l.getListeApprovisionnements().values()) {
                         if (a.getNomProduit().equalsIgnoreCase(selection.getNomProduit())) {
                             l.getListeApprovisionnements().remove(a.getIdentifiant());
+                            cellApprovisionnement.sauvegarderApprovisionnement(fichierApprovisionnement);
                         }
                     }
+
                     listApprovisionnements.remove(selection);
+
                     erreurApprovisionnement.setText("Supprimer avec Succes");
                     break;
                 }

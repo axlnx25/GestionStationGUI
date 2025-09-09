@@ -5,6 +5,7 @@
 package app_controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app_model.Fournisseur;
@@ -46,6 +47,7 @@ public class UtilisateurController implements Initializable {
     private Label erreurUtilisateur;
 
     private ObservableList<Utilisateur> listUsers;
+    String fichierUtilisateur = "Utilisateur.txt";
 
     GestionUtilisateurController g = new GestionUtilisateurController();
 
@@ -95,6 +97,7 @@ public class UtilisateurController implements Initializable {
         Utilisateur u = new Utilisateur(remplirUsername.getText(), remplirPassword.getText(), comboRole.getValue());
         g.creerUtilisateur(u);
         listUsers.add(u);
+        g.sauvegarderUtilisateur(fichierUtilisateur, erreurUtilisateur);
         remplirUsername.clear();
         remplirPassword.clear();
         comboRole.setValue(null);
@@ -106,6 +109,7 @@ public class UtilisateurController implements Initializable {
         Utilisateur u =  listeCrudUtilisateur.getSelectionModel().getSelectedItem();
         if (u != null) {
             g.supprimerUtilisateur(u);
+            g.sauvegarderUtilisateur(fichierUtilisateur, erreurUtilisateur);
             listUsers.remove(u);
 
             remplirUsername.clear();
@@ -133,6 +137,7 @@ public class UtilisateurController implements Initializable {
             selectedUtilisateur.setUsername(remplirUsername.getText());
             selectedUtilisateur.setPassword(remplirPassword.getText());
             selectedUtilisateur.setRole(comboRole.getValue());
+            g.sauvegarderUtilisateur(fichierUtilisateur, erreurUtilisateur);
 
             remplirUsername.clear();
             remplirPassword.clear();

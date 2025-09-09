@@ -1,7 +1,9 @@
 package app_controller;
 
 import app_model.Utilisateur;
+import javafx.scene.control.Label;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.*;
@@ -97,10 +99,76 @@ public class GestionUtilisateurController {
         return utilisateurs;
     }
 
-        // 5. Retour
-        public void retour() {
-            System.out.println("Retour au menu principal...");
+    public void sauvegarderUtilisateur (String fichier, Label erreur) {
+        try (BufferedWriter ecriture = new BufferedWriter(new FileWriter(new File(fichier)))) {
+            for (Utilisateur u : utilisateurs) {
+                ecriture.write(u.toString());
+                ecriture.newLine();
+            }
+        } catch (IOException e) {
+            erreur.setText(e.getMessage());
         }
     }
+
+    public void sauvegarderUtilisateur (String fichier) {
+        try (BufferedWriter ecriture = new BufferedWriter(new FileWriter(new File(fichier)))) {
+            for (Utilisateur u : utilisateurs) {
+                ecriture.write(u.toString());
+                ecriture.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void chargerUtilisateur(String fichier) {
+        utilisateurs.clear();
+        try (BufferedReader lecture = new BufferedReader(new FileReader(new File(fichier)))) {
+            String line;
+            while ((line = lecture.readLine()) != null) {
+                String[] data = line.split(",");
+                int id =  Integer.parseInt(data[0]);
+                String username = data[1];
+                String password = data[2];
+                String role = data[3];
+
+                Utilisateur u = new Utilisateur(username, password, role);
+//                u.setUsername(username);
+//                u.setPassword(password);
+//                u.setRole(role);
+
+                utilisateurs.add(u);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public ArrayList<Utilisateur> chargerUtilisateurIntermediaire (String fichier) {
+        ArrayList<Utilisateur> utilisateursIntermediaire = new ArrayList<>();
+        try (BufferedReader lecture = new BufferedReader(new FileReader(new File(fichier)))) {
+            String line;
+            while ((line = lecture.readLine()) != null) {
+                String[] data = line.split(",");
+                int id =  Integer.parseInt(data[0]);
+                String username = data[1];
+                String password = data[2];
+                String role = data[3];
+
+                Utilisateur u = new Utilisateur(username, password, role);
+                u.setUsername(username);
+                u.setPassword(password);
+                u.setRole(role);
+
+                utilisateursIntermediaire.add(u);
+            }
+            return utilisateursIntermediaire;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return utilisateursIntermediaire;
+        }
+    }
+
+}
 
 

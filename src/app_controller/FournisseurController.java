@@ -55,6 +55,7 @@ public class FournisseurController implements Initializable {
     private ObservableList<Fournisseur> listFournisseur;
 
     CrudFournisseur f = new CrudFournisseur();
+    String fichierFournisseur = "Fournisseur.txt";
 
     /**
      * Initializes the controller class.
@@ -98,6 +99,8 @@ public class FournisseurController implements Initializable {
         Fournisseur fournisseur = new Fournisseur(remplirNomFournisseur.getText(), remplirPrenomFournisseur.getText(), remplirAdresse.getText(), remplirTelephone.getText());
         f.ajouterAListeFournisseur(fournisseur);
         listFournisseur.add(fournisseur);
+        f.sauvegarderFournisseur(fichierFournisseur);
+
         remplirNomFournisseur.clear();
         remplirPrenomFournisseur.clear();
         remplirAdresse.clear();
@@ -110,6 +113,7 @@ public class FournisseurController implements Initializable {
         Fournisseur selection =  listeCrudFournisseur.getSelectionModel().getSelectedItem();
         if (selection != null) {
             f.supprimerFournisseur(selection.getIdentifiantFournisseur());
+            f.sauvegarderFournisseur(fichierFournisseur);
             listFournisseur.remove(selection);
 
             remplirAdresse.clear();
@@ -137,6 +141,7 @@ public class FournisseurController implements Initializable {
             selection.setPrenomFournisseur(remplirPrenomFournisseur.getText());
             selection.setAdresseFournisseur(remplirAdresse.getText());
             selection.setTelephoneFournisseur(remplirTelephone.getText());
+            f.sauvegarderFournisseur(fichierFournisseur);
 
             remplirAdresse.clear();
             remplirTelephone.clear();

@@ -154,12 +154,12 @@ public class Approvisionnement {
     }
 
     public String toString () {
-        return "Identifiant d'approvisionnement: " + this.identifiant.get() + "\nLibelle: " + this.libelle.get()
-                + "\nDate: " + this.date.get() + "\nNom du fournisseur: " + this.nomFournisseur.get()
-                + "\nNom du produit approvisionné: " + this.nomProduit.get()
-                + "\nValeur (prix) approvisionnée: " + this.valeurApprovisionnementEncours() +
-                "\nQuantite approvisionnée: " + this.quantitApprovisionne.get();
+        return        this.identifiant.get() +
+                "," + this.libelle.get() +
+                "," + this.date.get() +
+                "," + this.nomFournisseur.get() +
+                "," + this.nomProduit.get() +
+                "," + this.valeurApprovisionnementEncours() +
+                "," + this.quantitApprovisionne.get();
     }
-
-
 }

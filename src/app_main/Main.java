@@ -40,8 +40,27 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        String fichier = "VenteFichier.txt";
+        String fichierUtilisateur = "Utilisateur.txt";
+        String fichierFournisseur = "Fournisseur.txt";
+        String fichierProduit ="Stock.txt";
+        String fichierApprovisionnement = "Approvisionnement.txt";
+
+        VenteGestion venteGestion = new VenteGestion();
         GestionUtilisateurController defaultUser = new GestionUtilisateurController();
-        defaultUser.creerUtilisateur("admin", "12345", "admin");
+        CrudFournisseur fournisseur = new CrudFournisseur();
+        Stock stockCarburant = new Stock();
+        ApprovisionnementListe approvisionnement = new ApprovisionnementListe();
+
+//        defaultUser.creerUtilisateur("admin", "12345", "admin");
+//        defaultUser.sauvegarderUtilisateur(fichierUtilisateur);
+
+        defaultUser.chargerUtilisateur(fichierUtilisateur);
+        venteGestion.chargerVentes(fichier);
+        fournisseur.chargerFournisseur(fichierFournisseur);
+        stockCarburant.chargerStock(fichierProduit);
+        approvisionnement.chargerApprovisionnement(fichierApprovisionnement);
+
         launch(args);
     }
     
