@@ -2,6 +2,7 @@ package app_controller;
 
 import app_model.Carburant;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -44,39 +45,6 @@ public class Stock {
         stock.put(carburant.getIdentifiant(), carburant);
     }
 
-    public void afficherStock() {
-        if (stock.isEmpty()) {
-            System.out.println("\nStock vide");
-        }  else {
-            System.out.println("\nVoici la liste des produits du stock :");
-            for (Carburant carburant : stock.values()) {
-//                avertissement concernant niveau stock / alerte
-                if (carburant.getQuantite() < carburant.getNiveauAlerte()) {
-                    System.out.println("Alerte au stock de ce produit !!!!");
-                    System.out.println(carburant);
-                    System.out.println("--------------------------------------");
-                } else {
-                    System.out.println(carburant);
-                    System.out.println("--------------------------------------");
-                }
-            }
-            System.out.println("Total de carburants ( nombre ): " + stock.size());
-        }
-    }
-
-    public void afficherProduitPourVente() {
-        if (stock.isEmpty()) {
-            System.out.println("\nStock vide");
-        } else {
-            System.out.println("\nVoici la liste des produits du stock :\n");
-            for (Carburant carburant : stock.values()) {
-                System.out.println("------------------------------------");
-                System.out.println(carburant);
-                System.out.println("------------------------------------");
-            }
-        }
-    }
-
     public void supprimerDuStock(int idASupprimer) {
         if (stock.containsKey(idASupprimer)) {
             Carburant carburant = stock.get(idASupprimer);
@@ -88,68 +56,6 @@ public class Stock {
             stock.remove(carburant.getIdentifiant());
         } else  {
             System.out.println("Ce produit n'existe pas !!!!");
-        }
-    }
-
-    public void supprimerStock() {
-        if (stock.isEmpty()) {
-            System.out.println("Stock vide !!!!");
-        } else   {
-            totalValeurStock = 0.0;
-            totalQuantiteStock = 0.0;
-            stock.clear();
-        }
-    }
-
-    //    pour modifier un produit carburant du stock
-    public void modifierStock(int idModifier) {
-        if (!stock.isEmpty()) {
-            Scanner sc = new Scanner(System.in);
-
-//            modifier valeur dans le stock d'un produit
-            if (stock.containsKey(idModifier)) {
-                Carburant carburant = stock.get(idModifier);
-
-//                ajustement du stock
-                totalQuantiteStock = totalQuantiteStock - carburant.getQuantite();
-                totalValeurStock = totalValeurStock - carburant.getPrix();
-
-                System.out.print("Nouveau nom produit: ");
-                carburant.setNomCarburant(sc.nextLine());
-                System.out.print("Nouveau prix produit: ");
-                carburant.setPrix(sc.nextDouble());
-                sc.nextLine();
-//                inutile pas logique de modifier la quantité
-                System.out.print("Nouveau quantite: ");
-                carburant.setQuantite(sc.nextDouble());
-                sc.nextLine();
-                System.out.print("Nouveau niveau d'alerte: ");
-                carburant.setNiveauAlerte(sc.nextDouble());
-                sc.nextLine();
-
-//                prise en compte de la valeur modifié
-                totalValeurStock = totalValeurStock + carburant.getPrix();
-                totalQuantiteStock = totalQuantiteStock + carburant.getQuantite();
-
-                stock.put(idModifier, carburant);
-            } else {
-                System.out.println("Ce produit n'existe pas !!!!");
-            }
-        } else   {
-            System.out.println("Stocke vide ");
-        }
-    }
-
-    public void rechercherProduit (int idProduit ) {
-        if (!stock.isEmpty()) {
-            if (stock.containsKey(idProduit)) {
-                Carburant carburant = stock.get(idProduit);
-                System.out.println(carburant);
-            } else {
-                System.out.println("Ce produit n'existe pas ");
-            }
-        } else   {
-            System.out.println("Stock vide ");
         }
     }
 
@@ -177,37 +83,34 @@ public class Stock {
         }
     }
 
-    public void vendreProduit (String itemName, double prix, double quantite) {
-        for (Carburant carburant : stock.values()) {
-            if (carburant.getNomCarburant().equalsIgnoreCase(itemName)) {
-                double valeurTmp = totalValeurStock + prix;
-                double quantiteTmp = totalQuantiteStock - quantite;
-                setTotalValeurStock(valeurTmp);
-                setTotalQuantiteStock(quantiteTmp);
+    public void sauvegarderStock (String fichier) {
+        try (BufferedWriter ecriture = new BufferedWriter(new FileWriter(new File(fichier)))) {
+            for (Carburant carburant : stock.values()) {
+                ecriture.write(carburant.toString());
+                ecriture.newLine();
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public void annulerVendreProduit (String itemName, double prix, double quantite) {
-        for (Carburant carburant : stock.values()) {
-            if (carburant.getNomCarburant().equalsIgnoreCase(itemName)) {
-                double quantiteTmp = totalQuantiteStock + quantite;
-                double valeurTmp = totalValeurStock - prix;
-                carburant.setQuantite(carburant.getQuantite() + quantite);
-                setTotalValeurStock(valeurTmp);
-                setTotalQuantiteStock(quantiteTmp);
+    public void chargerStock (String fichier) {
+        try (BufferedReader lecture = new BufferedReader(new FileReader(new File(fichier)))) {
+            String line;
+            while ((line = lecture.readLine()) != null) {
+                String[] data = line.split(",");
+                int id =  Integer.parseInt(data[0]);
+                String nomCarburant = data[1];
+                double prix = Double.parseDouble(data[2]);
+                double seuil = Double.parseDouble(data[3]);
+                double quantite = Double.parseDouble(data[4]);
+
+                Carburant carburant = new Carburant(nomCarburant, prix, quantite, seuil);
+                stock.put(id, carburant);
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public boolean ventePossible (String itemName, double quantiteAVendre) {
-        for (Carburant carburant : stock.values()) {
-            if (carburant.getNomCarburant().equalsIgnoreCase(itemName)) {
-                if((carburant.getQuantite() > 0) && (carburant.getQuantite() > quantiteAVendre)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

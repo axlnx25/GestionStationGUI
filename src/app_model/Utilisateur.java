@@ -60,10 +60,10 @@ public class Utilisateur {
 
         @Override
         public String toString() {
-            return "ID: " + identifiant.get() +
-                    " | Username: " + username.get() +
-                    " | Password: " + password.get() +
-                    " | Role: " + role.get();
+            return        identifiant.get() +
+                    "," + username.get() +
+                    "," + password.get() +
+                    "," + role.get();
         }
     }
 

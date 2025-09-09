@@ -56,6 +56,7 @@ public class ProduitController implements Initializable {
     private ObservableList <Carburant> listProduit;
 
     Stock stockCarburant = new Stock();
+    String fichierProduit ="app_fichier/Stock.txt";
 
     /**
      * Initializes the controller class.
@@ -90,6 +91,8 @@ public class ProduitController implements Initializable {
             Carburant carburant = new Carburant(remplirNomProduit.getText(), Double.parseDouble(remplirPrixUnitaire.getText()),Double.parseDouble(remplirQuantite.getText()), Double.parseDouble(remplirSeuil.getText()) );
             stockCarburant.ajouterAuStock(carburant);
             listProduit.add(carburant);
+            stockCarburant.sauvegarderStock(fichierProduit);
+
             remplirPrixUnitaire.clear();
             remplirQuantite.clear();
             remplirSeuil.clear();
@@ -105,6 +108,8 @@ public class ProduitController implements Initializable {
         Carburant selection =  listeProduitCarburant.getSelectionModel().getSelectedItem();
         if (selection != null) {
             stockCarburant.supprimerDuStock(selection.getIdentifiant());
+            stockCarburant.sauvegarderStock(fichierProduit);
+
             listProduit.remove(selection);
             erreurCarburant.setText("Supprimer avec Succes ");
         } else erreurCarburant.setText("Echec !");
@@ -127,6 +132,8 @@ public class ProduitController implements Initializable {
             selection.setQuantite(Double.parseDouble(remplirQuantite.getText()));
             selection.setPrix(Double.parseDouble(remplirPrixUnitaire.getText()));
             selection.setNiveauAlerte(Double.parseDouble(remplirSeuil.getText()));
+            stockCarburant.sauvegarderStock(fichierProduit);
+
             listeProduitCarburant.refresh(); // Rafraîchir la vue
             erreurCarburant.setText("Modifier avec Succes ");
         } else erreurCarburant.setText("Echec !");

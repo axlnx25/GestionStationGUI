@@ -89,10 +89,11 @@ public class Fournisseur {
     }
 
     public String toString() {
-        return "Identifiant Fournisseur: " + this.identifiant.get() +
-                "\nNom Fournisseur: " + this.nomFournisseur.get() + "\nPreom Fournisseur: " +
-                this.prenomFournisseur.get() + "\nAdresse Fournisseur: " + this.adresseFournisseur.get() + "\nTelephone Fournisseur"
-                + this.telephoneFournisseur.get() ;
+        return        this.identifiant.get() +
+                "," + this.nomFournisseur.get() +
+                "," + this.prenomFournisseur.get() +
+                "," + this.adresseFournisseur.get() +
+                "," + this.telephoneFournisseur.get() ;
     }
 
 
