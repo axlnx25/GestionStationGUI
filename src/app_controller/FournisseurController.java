@@ -55,7 +55,7 @@ public class FournisseurController implements Initializable {
     private ObservableList<Fournisseur> listFournisseur;
 
     CrudFournisseur f = new CrudFournisseur();
-    String fichierFournisseur = "Fournisseur.txt";
+    String fichierFournisseur = "app_fichier/Fournisseur.txt";
 
     /**
      * Initializes the controller class.

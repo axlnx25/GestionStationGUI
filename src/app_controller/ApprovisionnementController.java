@@ -57,8 +57,8 @@ public class ApprovisionnementController implements Initializable {
     ObservableList<Approvisionnement> listApprovisionnements;
     ApprovisionnementListe cellApprovisionnement = new ApprovisionnementListe();
     CrudFournisseur fournisseur = new CrudFournisseur();
-    String fichierApprovisionnement = "Approvisionnement.txt";
-    String fichierProduit ="Stock.txt";
+    String fichierApprovisionnement = "app_fichier/Approvisionnement.txt";
+    String fichierProduit ="app_fichier/Stock.txt";
 
     /**
      * Initializes the controller class.

@@ -47,7 +47,7 @@ public class UtilisateurController implements Initializable {
     private Label erreurUtilisateur;
 
     private ObservableList<Utilisateur> listUsers;
-    String fichierUtilisateur = "Utilisateur.txt";
+    String fichierUtilisateur = "app_fichier/Utilisateur.txt";
 
     GestionUtilisateurController g = new GestionUtilisateurController();
 

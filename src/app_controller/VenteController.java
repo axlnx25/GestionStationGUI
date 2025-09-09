@@ -55,8 +55,8 @@ public class VenteController implements Initializable {
 
     ObservableList<Vente> listVente;
     VenteGestion venteGestion = new VenteGestion();
-    String fichier = "VenteFichier.txt";
-    String fichierProduit ="Stock.txt";
+    String fichier = "app_fichier/VenteFichier.txt";
+    String fichierProduit ="app_fichier/Stock.txt";
 
     /**
      * Initializes the controller class.

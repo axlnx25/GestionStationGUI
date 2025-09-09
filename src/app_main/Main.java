@@ -40,11 +40,11 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String fichier = "VenteFichier.txt";
-        String fichierUtilisateur = "Utilisateur.txt";
-        String fichierFournisseur = "Fournisseur.txt";
-        String fichierProduit ="Stock.txt";
-        String fichierApprovisionnement = "Approvisionnement.txt";
+        String fichier = "app_fichier/VenteFichier.txt";
+        String fichierUtilisateur = "app_fichier/Utilisateur.txt";
+        String fichierFournisseur = "app_fichier/Fournisseur.txt";
+        String fichierProduit ="app_fichier/Stock.txt";
+        String fichierApprovisionnement = "app_fichier/Approvisionnement.txt";
 
         VenteGestion venteGestion = new VenteGestion();
         GestionUtilisateurController defaultUser = new GestionUtilisateurController();
@@ -52,9 +52,11 @@ public class Main extends Application {
         Stock stockCarburant = new Stock();
         ApprovisionnementListe approvisionnement = new ApprovisionnementListe();
 
+//        utilisateur pardefaut a été enregistré
 //        defaultUser.creerUtilisateur("admin", "12345", "admin");
 //        defaultUser.sauvegarderUtilisateur(fichierUtilisateur);
 
+//      charger les anciennes données depuis des fichiers
         defaultUser.chargerUtilisateur(fichierUtilisateur);
         venteGestion.chargerVentes(fichier);
         fournisseur.chargerFournisseur(fichierFournisseur);

@@ -56,7 +56,7 @@ public class ProduitController implements Initializable {
     private ObservableList <Carburant> listProduit;
 
     Stock stockCarburant = new Stock();
-    String fichierProduit ="Stock.txt";
+    String fichierProduit ="app_fichier/Stock.txt";
 
     /**
      * Initializes the controller class.

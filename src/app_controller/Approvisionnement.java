@@ -105,8 +105,8 @@ public class Approvisionnement {
         return quantitApprovisionne;
     }
 
-    //    methode qui calcule la valeur prix de l'approvisionnement en cours et la retourne
-//    pour incremanter la valeur prix du stock
+//    methode qui calcule la valeur prix de l'approvisionnement en cours et la retourne
+//    pour incrementer la valeur prix du stock
     public double valeurApprovisionnementEncours () {
         return stock.getItemPrice(this.nomProduit.get()) * this.quantitApprovisionne.get();
     }
@@ -114,43 +114,6 @@ public class Approvisionnement {
     public DoubleProperty valeurApprovisionnementEncoursProperty () {
        DoubleProperty price = new SimpleDoubleProperty(stock.getItemPrice(this.nomProduit.get()) * this.quantitApprovisionne.get());
         return price;
-    }
-
-    //    methode a appeler dans le menu apres nouvelle approvisionnement
-    public void miseAJourStock() {
-//        trouver l'id du produit par son nom pour modifier son stock (valeur quantite) dans stock general
-        for (Carburant carburant : Stock.getStock().values()) {
-            if (carburant.getNomCarburant().equalsIgnoreCase(this.nomProduit.get())) {
-//                augmenter quantite apres approvisionnement
-                carburant.setQuantite(carburant.getQuantite() + this.quantitApprovisionne.get());
-                double quantite = stock.gettotalQuantiteStock() +
-                        this.getQuantitApprovisionne();
-                stock.setTotalQuantiteStock(quantite);
-
-//                augmenter valeur prix apres approvisionnement
-                double valeur = stock.gettotalValeurStock() +
-                        this.valeurApprovisionnementEncours();
-                stock.setTotalValeurStock(valeur);
-            }
-        }
-    }
-
-    //    methode appeler lors de la suppression d'un approvisionnement
-    public void annulerApprovisionnement() {
-        for (Carburant carburant : Stock.getStock().values()) {
-            if (carburant.getNomCarburant().equalsIgnoreCase(this.nomProduit.get())) {
-//                soustraire quantite apres annuler approvisionnement
-                double quantite = stock.gettotalQuantiteStock() -
-                        this.getQuantitApprovisionne();
-                stock.setTotalQuantiteStock(quantite);
-                carburant.setQuantite(carburant.getQuantite() - this.quantitApprovisionne.get());
-
-//                soustraire valeur prix apres annuler approvisionnement
-                double valeur = stock.gettotalValeurStock() -
-                        this.valeurApprovisionnementEncours();
-                stock.setTotalValeurStock(valeur);
-            }
-        }
     }
 
     public String toString () {
