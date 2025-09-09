@@ -5,6 +5,7 @@
 package app_controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -33,7 +34,7 @@ public class SortieCaisseController implements Initializable {
     @FXML
     private TableColumn<Approvisionnement, Double> quantiteApprovisionne;
     @FXML
-    private TableColumn<Approvisionnement, String> dateApprovisionnement;
+    private TableColumn<Approvisionnement, LocalDate> dateApprovisionnement;
     @FXML
     private TableColumn<Approvisionnement, Double> prixApprovisionnement;
 

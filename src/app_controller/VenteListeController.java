@@ -7,6 +7,7 @@ package app_controller;
 import app_controller.VenteGestion;
 import app_model.Vente;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ public class VenteListeController implements Initializable {
     @FXML
     private TableColumn<Vente, Double> prixVente;
     @FXML
-    private TableColumn<Vente, String> dateVente;
+    private TableColumn<Vente, LocalDate> dateVente;
     @FXML
     private TableColumn<Vente, String> etatVente;
     
